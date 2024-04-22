@@ -24,22 +24,27 @@ const usuarioSchema = new mongoose.Schema({
 
   });
 
-  usuarioSchema.loadClass(UsuarioObj)
+usuarioSchema.loadClass(UsuarioObj)
 
-  usuarioSchema.statics.validarCredenciais = async function(email, senha) {
 
-    const usuario = await this.findOne({ email });
+usuarioSchema.statics.validarCredenciais = async function(email, password) {
+  try {
+    const usuario = await Usuario.findOne({ email: email });
     if (!usuario) {
-        throw new Error('Credenciais inválidas');
+      throw new Error('E-mail inválido');
     }
-    
-    if (usuario.senha !== senha) {
-        throw new Error('Credenciais inválidas');
+    if (usuario.password !== password) {
+      throw new Error('Senha inválida');
     }
-
+    console.log('Acesso liberado para o usuário:', email);
     return usuario;
+
+  } catch (error) {
+    throw new Error('Erro ao validar credenciais');
+  }
 };
 
-  const Usuario = mongoose.model('Usuarios', usuarioSchema);
-  
- export default Usuario
+
+const Usuario = mongoose.model('Usuarios', usuarioSchema);
+
+export default Usuario

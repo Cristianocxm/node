@@ -1,56 +1,47 @@
-import mongoose from '../database/conexao.js'
+import mongoose from '../database/conexao.js';
+import { consulta } from '../database/conexao.js'
 import Usuario from '../../models/usuarios.js'
 
 
 class usuarioRepository{
 
     validaLogin(login) {
-        Usuario.validarCredenciais(login.email, login.senha)
-    .then(usuario => {
-        console.log('Login bem-sucedido. Usuário:', usuario);
+        console.log('Chamada: valida login');
+        return Usuario.validarCredenciais(login.email, login.password)
+          .then(usuario => {
+            console.log('Login bem-sucedido. Usuário:', usuario);
+            return usuario;
+          })
+          .catch(erro => {
+            console.error('Erro ao validar credenciais:', erro.message);
+            throw erro;
+          });
+      }
 
-    })
-    .catch(erro => {
-        console.error('Erro ao validar credenciais:', erro.message);
-    });
-    }
 
-
-    findAll() {
-        Usuario.findAll(function (err, suc){
-            if (err) return handleError(err);
-            console.log("Usuario criado!")
-        })
+      findAll() {
+        const sql = "SELECT * FROM bdusers.usuarios;"
+        return consulta(sql, 'Não foi possível encontrar os dados.')
     }
 
     findById(id) {
-        Usuario.findById(function (err, suc){
-            if (err) return handleError(err);
-            console.log("Usuario criado!")
-        })
+        const sql = "SELECT * FROM bdusers.usuarios WHERE id = ?;"
+        return consulta(sql, id, 'Não foi possível localizar o id informado.')
     }
 
     create(usuario) {
-        Usuario.create(usuario).then(usuarioCriado => {
-            console.log('Novo usuário criado:', usuarioCriado);
-        })
-        .catch(erro => {
-            console.error('Erro ao criar novo usuário:', erro);
-        });
+        const sql = "INSERT INTO usuarios SET ?;"
+        return consulta(sql, usuario, 'Não foi possível realizar o cadastro.')
     }
 
     update(usuario, id) {
-        Usuario.update(usuario, id, function (err, suc){
-            if (err) return handleError(err);
-            console.log("Usuario criado!")
-        })
+        const sql = "UPDATE usuarios SET ? where id = ?;"
+        return consulta(sql, [usuario, id], 'Não foi possível atualizar os dados.')
     }
 
     delete(id) {
-        Usuario.delete(id, function (err, suc){
-            if (err) return handleError(err);
-            console.log("Usuario criado!")
-        })
+        const sql = "DELETE FROM bdusers.usuarios WHERE id = ?;"
+        return consulta(sql, id, 'Não foi possível excluir o cdastro.')
     }
 
 }

@@ -4,11 +4,16 @@ import usuarioRepository from '../repositories/usuarioRepository.js';
 
 class usuarioController {
 
-    async validaLogin(req, res) {
-        const login = req.body
-        console.log(login)
-        await usuarioRepository.validaLogin(login, res)
-        res.redirect('/sucess');
+    async validaUsuario(req, res) {
+        try {
+            const login = req.body;
+            await usuarioRepository.validaLogin(login);
+            // Redireciona para a página de sucesso após a validação bem-sucedida
+            res.render('success');
+        } catch (error) {
+            console.error('Erro ao validar o login:', error);
+            res.redirect('/login?error=1');
+        }
     }
 
     async index(req, res) {
