@@ -23,7 +23,7 @@ SRC
   routes.js
   server.js
 
-A pasta app foi modularizada em três subpastas:
+A pasta app foi subdividida em três subpastas:
   - controllers: onde foram definidas a classe de controle de validação de login e de aplicação do CRUD;
   - database: onde foram definidos os schemas dos bancos NOSQL (MONGODB) e SQL (MySQL). Na definição da conexão com o MONGODB,
     foi definida uma constante 'mongoURL' que armazena a URL com as credenciais para conexão com a base de dados do MONGODB.
