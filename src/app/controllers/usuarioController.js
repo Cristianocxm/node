@@ -8,7 +8,6 @@ class usuarioController {
         try {
             const login = req.body;
             await usuarioRepository.validaLogin(login);
-            // Redireciona para a página de sucesso após a validação bem-sucedida
             res.render('success');
         } catch (error) {
             console.error('Erro ao validar o login:', error);
