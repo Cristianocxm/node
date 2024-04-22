@@ -44,4 +44,4 @@ Nas rotas definidas no arquivo 'routes.js', foi importado o módulo 'usuarioCont
 
 No arquivo 'server.js', foi definida a porta na qual o servidor vai receber as requisições, bem como vai informar se está pronto.
 
-O projeto tiha como objetivo inicial implmentar a integração das camadas do FLASK e NODE, mas por falta de conclusão, essa funcionalidade não foi implementada.
+O projeto tinha como objetivo inicial implmentar a integração das camadas do FLASK e NODE, mas por falta de conclusão, essa funcionalidade não foi implementada.
