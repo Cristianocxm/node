@@ -27,7 +27,6 @@ class Funcionario(db.Model):
     setor = db.relationship('Setor', backref='funcionarios')
     cargo = db.relationship('Cargo', backref='funcionarios')
 
-
 def verifica_e_cria_tabelas(): #Função que verifica se as tabelas existem no banco e criá-las caso contrário.
     with app.app_context():
         inspector = inspect(db.engine)
@@ -41,7 +40,6 @@ def verifica_e_cria_tabelas(): #Função que verifica se as tabelas existem no b
                 print(f"Tabela '{tabela}' criada com sucesso.")
             else:
                 print(f"A tabela '{tabela}' já existe.")
-
 
 def obter_dados_do_banco_de_dados(tabela): #Função para retornar os dados da base de acordo com o parâmetro passado (setor, cargo, funcionario)
     try:
@@ -57,12 +55,6 @@ def obter_dados_do_banco_de_dados(tabela): #Função para retornar os dados da b
     except Exception as e:
         print(f"Erro ao obter os dados da tabela {tabela} do banco de dados: {str(e)}")
         return []
-        
-
-@app.route('/') #Rota página inicial
-def index():
-    return render_template('index.html')
-
 
 @app.route('/cadastrar_setor', methods=['GET', 'POST']) #Rota para cadastrar os setores
 def cadastrar_setor():
@@ -77,8 +69,6 @@ def cadastrar_setor():
             return 'Ocorreu um erro ao cadastrar o setor: ' + str(e)
 
     return render_template('setor.html')
-
-
 
 @app.route('/cadastrar_cargo', methods=['GET', 'POST']) #Rota para cadastrar os cargos
 def cadastrar_cargo():
@@ -96,8 +86,6 @@ def cadastrar_cargo():
     
     setores = Setor.query.all()
     return render_template('cargo.html', setores=setores)
-
-
 
 @app.route('/cadastrar_funcionario', methods=['GET', 'POST']) #Rota para cadastrar os funcionários
 def cadastrar_funcionario():
@@ -132,8 +120,6 @@ def cadastrar_funcionario():
     cargos = Cargo.query.all()
     return render_template('funcionario.html', setores=setores, cargos=cargos)
 
-
-
 @app.route('/excluir_setor/<int:id>', methods=['GET', 'POST'])
 def excluir_setor(id):
     setor = Setor.query.get_or_404(id)
@@ -143,7 +129,6 @@ def excluir_setor(id):
         return redirect(url_for('setores'))
     except Exception as e:
         return 'Ocorreu um erro ao excluir o setor: ' + str(e)
-    
 
 @app.route('/excluir_funcionario/<int:funcionario_id>', methods=['GET', 'POST'])
 def excluir_funcionario(funcionario_id):
@@ -155,7 +140,6 @@ def excluir_funcionario(funcionario_id):
     except Exception as e:
         return f'Ocorreu um erro ao excluir o funcionário: {str(e)}'
 
-
 @app.route('/excluir_cargo/<int:cargo_id>', methods=['GET', 'POST'])
 def excluir_cargo(cargo_id):
     cargo = Cargo.query.get_or_404(cargo_id)
@@ -166,8 +150,6 @@ def excluir_cargo(cargo_id):
     except Exception as e:
         return f'Ocorreu um erro ao excluir o cargo: {str(e)}'
     
-    
-
 @app.route('/editar_setor/<int:id>', methods=['GET', 'POST'])
 def editar_setor(id):
     setor = Setor.query.get_or_404(id)
@@ -180,8 +162,6 @@ def editar_setor(id):
             return 'Ocorreu um erro ao atualizar o setor: ' + str(e)
     # Renderiza o formulário de edição com os dados do setor
     return render_template('atualiza_setor.html', setor=setor)
-
-
 
 @app.route('/editar_cargo/<int:id>', methods=['GET', 'POST'])
 def editar_cargo(id):
@@ -200,7 +180,6 @@ def editar_cargo(id):
             return 'Ocorreu um erro ao atualizar o cargo: ' + str(e)
 
     return render_template('atualiza_cargo.html', cargo=cargo, setores=setores)
-
 
 @app.route('/editar_funcionario/<int:funcionario_id>', methods=['GET', 'POST'])
 def editar_funcionario(funcionario_id):
@@ -223,6 +202,9 @@ def editar_funcionario(funcionario_id):
     cargos = Cargo.query.all()
     return render_template('editar_funcionario.html', funcionario=funcionario, setores=setores, cargos=cargos)
 
+@app.route('/') #Rota página inicial
+def index():
+    return render_template('index.html')
 
 @app.route('/sucesso') #Rota para a mensagem de sucesso
 def sucesso():
@@ -232,7 +214,6 @@ def sucesso():
 @app.route('/gerenciar_cadastros')
 def gerenciar_cadastros():
     return render_template('gerenciar.html')
-
 
 @app.route('/setores') #Rota para gerenciar os setores na página "gerenciar"
 def setores():
