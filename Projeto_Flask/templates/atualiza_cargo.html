@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Atualização de Cargo</title>
+</head>
+<body>
+    <h1>Atualizar de Cargo</h1>
+    <form action="/editar_cargo/{{ cargo.id }}" method="post">
+        <input type="hidden" name="id" value="{{ cargo.id }}"> <!-- Adiciona um campo oculto para enviar o ID do cargo -->
+        <label for="nome">Nome do Cargo:</label>
+        <input type="text" name="nome" value="{{ cargo.nome }}" required>
+        <label for="id_setor">Setor:</label>
+        <select name="id_setor" required>
+            {% for setor in setores %}
+            <option value="{{ setor.id }}" {% if setor.id == cargo.id_setor %} selected {% endif %}>{{ setor.nome }}</option>
+            {% endfor %}
+        </select>
+        <input class="btn" type="submit" value="Atualizar">
+        <button class="btn" type="button" onclick="history.back()">Voltar</button>
+    </form>
+</body>
+</html>
