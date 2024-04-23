@@ -11,15 +11,11 @@ router.get('/', (req, res) => {
     res.render('login'); // Passa a mensagem de erro para a página
 });
 
-router.post('/login', usuarioController.validaUsuario)
-router.get('/usuarios', usuarioController.index)
-router.get('/usuarios/:id', usuarioController.show)
-router.post('/usuarios', usuarioController.store)
-router.put('/usuarios/:id', usuarioController.update)
-router.delete('/usuarios/:id', usuarioController.delete)
+// Middleware para realizar o redirecionamento
 
-router.get('/success', (req, res) => {
-    res.render('success'); // Ou envie o conteúdo da página de sucesso
-});
+
+// Defina a rota /login e utilize a função validaUsuario como um middleware
+router.post('/login', usuarioController.validaUsuario);
+
 
 export default router
