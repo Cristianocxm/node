@@ -24,17 +24,16 @@ SRC
   server.js
 
 A pasta app foi subdividida em três subpastas:
-  - controllers: onde foram definidas a classe de controle de validação de login e de aplicação do CRUD;
-  - database: onde foram definidos os schemas dos bancos NOSQL (MONGODB) e SQL (MySQL). Na definição da conexão com o MONGODB,
+  - controllers: onde foram definidas a classe de controle de validação de login, que acessa o Repository para essa validação;
+  - database: onde foi definida os schemas do banco NOSQL (MONGODB). Na definição da conexão com o MONGODB,
     foi definida uma constante 'mongoURL' que armazena a URL com as credenciais para conexão com a base de dados do MONGODB.
-    Nesse arquivo, foi definida ainda uma constante para armazenar as informações de conexão com a base de dados do MYSQL,
-    a fim de fazer a conexão para as tratativas do CRUD. Além disso, foi criada uma função "consulta" para realizaras querys no MYSQL;
-  - repositories: onde ficou definida a classe que executa os CRUD;
-Resumidamente, as requisições vem do usuarioControllers, que faz a requição no repository, que por sua vez busca as informações nas conexões definidas no arquivo conezão.
+    Nesse arquivo, foi definida ainda uma constante para armazenar as informações de conexão com a base de dados do MYSQL.
+  - repositories: onde ficou definida a classe que para validar o Login no MongoDB;
+Resumidamente, as requisições vem do usuarioControllers, que faz a requição no repository, que por sua vez faz a validação na base de usuário.
 
-A pasta models, contém o arquivo Usuário, onde se define o objeto usuário e o SCHEMA da base do MONGODB, bem como uma função de validar as credenciais de acesso na página LOGIN.
+A pasta models, contém o arquivo Usuário, onde se define o objeto usuário e o SCHEMA da base do MONGODB.
 
-A pasta views, contém os arquivos do front: página de login e de sucesso, em caso de validação das credenciais de acesso.
+A pasta views, contém o arquivo do front: página de login para acesso à aplicação do Flask.
   
 
 O arquivo 'app.js', que é responsável pela definição do módulo 'express', bem como alguns outros módulos necessários para definição das rotas, 
