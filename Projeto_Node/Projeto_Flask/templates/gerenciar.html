@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Gerenciar Cadastros</title>
+</head>
+<body>
+    <h1>Gerenciar Cadastros</h1>
+    <a href="/setores"><button class="btn">Gerenciar setores</button></a>
+    <a href="/cargos"><button class="btn">Gerenciar cargos</button></a>
+    <a href="/funcionarios"><button class="btn">Gerenciar funcionários</button></a>
+    <a href="/"><button class="btn">Home</button></a>
+
+     <!-- Tabela de Setores -->
+     {% if tipo == 'setores' %}
+     <table>
+         <thead>
+             <tr>
+                <th>Setores cadastrados</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+                
+             </tr>
+         </thead>
+         <tbody>
+             {% for setor in dados %}
+             <tr>
+                <td>{{ setor.nome }}</td>
+                <td><a href="/editar_setor/{{ setor.id }}"><button class="btn-edt">Editar</button></a></td>
+                <td><a href="/excluir_setor/{{ setor.id }}" onclick="return confirm('Tem certeza que deseja excluir este setor?')"><button class="btn-exc">Excluir</button></a></td>
+             </tr>
+             {% endfor %}
+         </tbody>
+     </table>
+     {% endif %}
+ 
+     <!-- Tabela de Cargos -->
+     {% if tipo == 'cargos' %}
+     <table>
+        <thead>
+            <tr>
+                <th>Cargos cadastrados</th>
+                <th>Setor</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cargo in dados %}
+            <tr>
+                <td>{{ cargo.nome }}</td>
+                <td>{{ cargo.setor.nome }}</td>
+                <td><a href="/editar_cargo/{{ cargo.id }}"><button class="btn-edt">Editar</button></a></td>
+                <td><a href="/excluir_cargo/{{ cargo.id }}" onclick="return confirm('Tem certeza que deseja excluir este cargo?')"><button class="btn-exc">Excluir</button></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+     {% endif %}
+ 
+     <!-- Tabela de Funcionários -->
+     {% if tipo == 'funcionarios' %}
+     <table>
+        <thead>
+            <tr>
+                <th>Primeiro Nome</th>
+                <th>Sobrenome</th>
+                <th>Data de admissão</th>
+                <th>Status</th>
+                <th>Setor</th>
+                <th>Cargo</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for funcionario in dados %}
+            <tr>
+                <td>{{ funcionario.primeiro_nome }}</td>
+                <td>{{ funcionario.sobrenome }}</td>
+                <td>{{ funcionario.data_admissao }}</td>
+                <td id="status-celula">{{ funcionario.status_funcionario }}</td>
+                <td>{{ funcionario.setor.nome }}</td>
+                <td>{{ funcionario.cargo.nome }}</td>
+                <td><a href="/editar/funcionario/{{ funcionario.id }}"><button class="btn-edt">Editar</button></a></td>
+                <td><a href="/excluir_funcionario/{{ funcionario.id }}" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')"><button class="btn-exc">Excluir</button></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+     {% endif %}
+
+<script>
+    var statusCelula = document.getElementById('status-celula');
+    var status = statusCelula.textContent.trim(); // Remove espaços em branco extras
+
+    if (status.toLowerCase() === 'true') {
+        statusCelula.textContent  = 'Ativo'
+    } else if (status.toLowerCase() === 'false') {
+        statusCelula.textContent  = 'Inativo'
+    } else {
+        console.log('O valor não é True nem False');
+    }
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Cadastro de Funcionário</title>
+</head>
+<body>
+    <h1>Cadastro de Funcionário</h1>
+    <form action="/cadastrar_funcionario" method="post">
+        
+        <label for="primeiro_nome">Primeiro Nome:</label>
+        <input type="text" name="primeiro_nome" required>
+        
+        <label for="sobrenome">Sobrenome:</label>
+        <input type="text" name="sobrenome" required>
+        
+        <label for="data_admissao">Data de Admissão:</label>
+        <input type="date" name="data_admissao" required>
+       
+        <label>Status do Funcionário:</label>
+        <input type="radio" name="status_funcionario" value="1" required> Ativo
+        <input type="radio" name="status_funcionario" value="0" required> Inativo
+        
+        <label for="id_setor">Setor:</label>
+        <select name="id_setor" id="id_setor" required>
+            <option value="" class="opt-vz"></option> <!-- Opção vazia -->
+            {% for setor in setores %}
+            <option value="{{ setor.id }}">{{ setor.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="id_cargo">Cargo:</label>
+        <select name="id_cargo" id="id_cargo" required>
+            <option value="" class="opt-vz"></option> <!-- Opção vazia -->
+        </select>
+
+        <input class="btn" type="submit" value="Cadastrar">
+        <button class="btn" type="button" onclick="history.back()">Voltar</button>
+    </form>
+
+    <script>
+        // Adiciona um evento de alteração ao menu suspenso de seleção de setor
+        document.getElementById("id_setor").addEventListener("change", function() {
+            var setorSelecionado = this.value; // Obtém o valor do setor selecionado
+    
+            // Remove todas as opções atuais do menu suspenso de seleção de cargo
+            var selectCargo = document.getElementById("id_cargo");
+            selectCargo.innerHTML = '<option value="" class="opt-vz"></option>'; // Adiciona uma opção vazia
+    
+            // Itera sobre os cargos e adiciona apenas os cargos vinculados ao setor selecionado
+            {% for cargo in cargos %}
+            if ("{{ cargo.id_setor }}" === setorSelecionado) {
+                var option = document.createElement("option");
+                option.value = "{{ cargo.id }}";
+                option.textContent = "{{ cargo.nome }}";
+                selectCargo.appendChild(option);
+            }
+            {% endfor %}
+        });
+    </script>
+    
+</body>
+</html>
