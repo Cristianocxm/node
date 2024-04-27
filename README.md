@@ -44,4 +44,5 @@ Nas rotas definidas no arquivo 'routes.js', foi importado o módulo 'usuarioCont
 
 No arquivo 'server.js', foi definida a porta na qual o servidor vai receber as requisições, bem como vai informar se está pronto.
 
-O projeto tinha como objetivo inicial implmentar a integração das camadas do FLASK e NODE, mas por falta de conclusão, essa funcionalidade não foi implementada.
+Na página inicial, foi inserida uma linha de código com o windows.location() para redirecionar a rota para a aplicação Flask, onde foi realizado o CRUD no banco de dados MySQL.
+Assim que é relizada a chamada para verificar as credenciais no MongoDB, em caso de retorno positivo, a rota é acionada.
